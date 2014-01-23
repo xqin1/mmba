@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title></title>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src='//api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.js'></script>
+  <link href='//api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.css' rel='stylesheet' />
+  <!--[if lte IE 8]>
+    <link href='//api.tiles.mapbox.com/mapbox.js/v1.4.0/mapbox.ie.css' rel='stylesheet'>
+  <![endif]-->
+  <style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
+</head>
+<body>
+<!--
+  Include Leaflet.fullscreen and Leaflet-hash's CSS and JavaScript assets.
+  Unlike mapbox.js, these are not hosted by MapBox; you will
+  need to download and host them yourself.
+-->
+<!-- <link rel="stylesheet" href="/mapbox.js/assets/leaflet.fullscreen.css" />
+<script src="/mapbox.js/assets/Leaflet.fullscreen.js"></script>
+<script src="/mapbox.js/assets/leaflet-hash.js"></script> -->
+ 
+<style>
+#map-ui {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+}
+ 
+#map-ui ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+ 
+#map-ui a {
+    font-size: 13px;
+    background: #FFF;
+    color: #3C4E5A;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #BBB;
+    border-bottom-width: 0;
+    min-width: 138px;
+    padding: 10px;
+    text-decoration: none;
+}
+ 
+#map-ui a:hover {
+    background: #ECF5FA;
+}
+ 
+#map-ui li:last-child a {
+    border-bottom-width: 1px;
+    -webkit-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
+}
+ 
+#map-ui li:first-child a {
+    -webkit-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+ 
+#map-ui a.active {
+    background: #3887BE;
+    border-color: #3887BE;
+    border-top-color: #FFF;
+    color: #FFF;
+}
+ 
+#map-ui li:first-child a.active {
+    border-top-color: #3887BE;
+}
+ 
+#map .map-fullscreen {
+    background-color: #28353D;
+}
+</style>
+<div id='map'>
+    <div id='map-ui'>
+        <ul>
+            <li><a href='#' id='mayor' class='sel active'>Fastest Download Speed</a></li>
+            <li><a href='#' id='ds_att' class='sel inactive'>ATT - Download Speed</a></li>
+            <li><a href='#' id='ds_sprint' class='sel inactive'>Sprint - Download Speed</a></li>
+            <li><a href='#' id='ds_tmobile' class='sel inactive'>T-Mobile - Download Speed</a></li>
+            <li><a href='#' id='ds_vz' class='sel inactive'>Verizon - Download Speed</a></li>
+        </ul>
+    </div>
+</div>
+ 
+
+
+
+
+<script>
+var map = L.mapbox.map('map', 'fcc.map-kzt95hy6', {attributionControl: false})
+            .setView([38.82, -94.96], 4);
+
+var activeLayerGroup = new L.LayerGroup();
+var mayor_TL = L.mapbox.tileLayer('fcc.xtwng66r')
+                    .on('load',function(){map.legendControl.addLegend(mayor_TL.getTileJSON().legend);
+                                        mayor_TL.removeEventListener();})
+
+var mayor_GL = L.mapbox.gridLayer('fcc.xtwng66r')
+var mayor_GC = L.mapbox.gridControl(mayor_GL, {follow: true})//.addTo(map);
+var tileName = "mayor";
+
+activeLayerGroup.addLayer(mayor_TL);
+activeLayerGroup.addLayer(mayor_GL);
+activeLayerGroup.addLayer(mayor_GC);
+activeLayerGroup.addTo(map,function(){console.log('done')});
+map.legendControl.addLegend(mayor_TL.getTileJSON().legend);
+
+var ds_att_TL = L.mapbox.tileLayer('fcc.0novfgvi');
+var ds_att_GL = L.mapbox.gridLayer('fcc.0novfgvi');
+var ds_att_GC = L.mapbox.gridControl(ds_att_GL, {follow: true});
+ 
+var ds_sprint_TL = L.mapbox.tileLayer('fcc.vy722o6r');
+var ds_sprint_GL = L.mapbox.gridLayer('fcc.vy722o6r');
+var ds_sprint_GC = L.mapbox.gridControl(ds_sprint_GL, {follow: true});
+ 
+var ds_tmobile_TL = L.mapbox.tileLayer('fcc.xuwyiudi');
+var ds_tmobile_GL = L.mapbox.gridLayer('fcc.xuwyiudi');
+var ds_tmobile_GC = L.mapbox.gridControl(ds_tmobile_GL, {follow: true});
+ 
+var ds_vz_TL = L.mapbox.tileLayer('fcc.y9nc23xr');
+var ds_vz_GL = L.mapbox.gridLayer('fcc.y9nc23xr');
+var ds_vz_GC = L.mapbox.gridControl(ds_vz_GL, {follow: true});
+
+d3.selectAll(".sel").on("click", function(){
+    if (d3.select(this).classed("active")){
+        //do nothing
+    }else{
+        d3.select('.map-legend').remove();
+        d3.selectAll(".sel").attr("class","sel inactive");
+        d3.select(this).attr("class","sel active");
+         map.legendControl.removeLegend(eval(tileName+"_TL").getTileJSON().legend);
+         tileName = d3.select(this).attr("id");
+
+        activeLayerGroup.clearLayers();
+        activeLayerGroup.addLayer(eval(tileName+"_TL"));
+        activeLayerGroup.addLayer(eval(tileName+"_GL"));
+        activeLayerGroup.addLayer(eval(tileName+"_GC"));
+        map.legendControl.addLegend(eval(tileName+"_TL").getTileJSON().legend);
+    }
+});
+ 
+</script>
+</body>
+</html>
