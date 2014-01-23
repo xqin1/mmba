@@ -21,6 +21,31 @@
 <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.1/leaflet.fullscreen.css' rel='stylesheet' />
  
 <style>
+h1 { 
+	font-family: Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    margin: 0;
+}
+
+#map-titleBlock {
+	background-color: #FFFFFF;
+    left: 10px;
+    letter-spacing: 0;
+    padding: 5px 10px;
+    position: absolute;
+    bottom: 53px;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+#map-desc {
+	display: block;
+    font-size: 12px; 
+    font-weight: normal;
+    margin-top: 5px;   
+}
+
 #map-ui {
     position: absolute;
     top: 10px;
@@ -90,7 +115,9 @@
     </div>
 </div>
  
-
+<div id="map-titleBlock">
+    <h1><span id="map-hd">[Map Title]</span> <span id="map-desc">[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quot homines, tot sententiae; Mihi enim satis est, ipsis non satis.]</span></h1>
+</div>
 
 
 
@@ -131,6 +158,29 @@ var ds_vz_TL = L.mapbox.tileLayer('fcc.y9nc23xr');
 var ds_vz_GL = L.mapbox.gridLayer('fcc.y9nc23xr');
 var ds_vz_GC = L.mapbox.gridControl(ds_vz_GL, {follow: true});
 
+var mapHd = {
+	mayor: {
+		title: 'mayor',
+		description: 'mayor: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quot homines, tot sententiae; Mihi enim satis est, ipsis non satis.'	
+	},
+	ds_att: {
+		title: 'ds_att',
+		description: 'ds_att: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quot homines, tot sententiae; Mihi enim satis est, ipsis non satis.'	
+	},
+	ds_sprint: {
+		title: 'ds_sprint',
+		description: 'ds_sprint: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quot homines, tot sententiae; Mihi enim satis est, ipsis non satis.'	
+	},
+	ds_tmobile: {
+		title: 'ds_tmobile',
+		description: 'ds_tmobile: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quot homines, tot sententiae; Mihi enim satis est, ipsis non satis.'	
+	},
+	ds_vz: {
+		title: 'ds_vz',
+		description: 'ds_vz: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quot homines, tot sententiae; Mihi enim satis est, ipsis non satis.'	
+	}	
+}
+
 d3.selectAll(".sel").on("click", function(){
     if (d3.select(this).classed("active")){
         //do nothing
@@ -146,6 +196,13 @@ d3.selectAll(".sel").on("click", function(){
         activeLayerGroup.addLayer(eval(tileName+"_GL"));
         activeLayerGroup.addLayer(eval(tileName+"_GC"));
         map.legendControl.addLegend(eval(tileName+"_TL").getTileJSON().legend);
+		
+		for (var key in mapHd) { 
+			if (key === this.id) { 
+				d3.select('#map-hd').text(mapHd[key].title);
+				d3.select('#map-desc').text(mapHd[key].description);		
+			}	
+		}
     }
 });
  
