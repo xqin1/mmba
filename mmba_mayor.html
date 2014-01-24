@@ -106,7 +106,7 @@ h1 {
 <div id='map'>
     <div id='map-ui'>
         <ul>
-            <li><a href='javascript:void(0)' id='mayor' class='sel active'>Fastest Download Speed</a></li>
+            <li><a href='javascript:void(0)' id='mayor' class='sel active'>FCC Speed Test Participation</a></li>
             <li><a href='javascript:void(0)' id='ds_att' class='sel inactive'>ATT - Download Speed</a></li>
             <li><a href='javascript:void(0)' id='ds_sprint' class='sel inactive'>Sprint - Download Speed</a></li>
             <li><a href='javascript:void(0)' id='ds_tmobile' class='sel inactive'>T-Mobile - Download Speed</a></li>
@@ -133,10 +133,10 @@ var activeLayerGroup = new L.LayerGroup();
 //                                         mayor_TL.removeEventListener();})
 
 // var mayor_GL = L.mapbox.gridLayer('fcc.xtwng66r')
-var mayor_TL = L.mapbox.tileLayer('fcc.0novfgvi')
+var mayor_TL = L.mapbox.tileLayer('fcc.xtwng66r')
                     .on('load',function(){map.legendControl.addLegend(mayor_TL.getTileJSON().legend);
                                         mayor_TL.removeEventListener();})
-var mayor_GL = L.mapbox.gridLayer('fcc.0novfgvi')
+var mayor_GL = L.mapbox.gridLayer('fcc.xtwng66r')
 var mayor_GC = L.mapbox.gridControl(mayor_GL, {follow: true})//.addTo(map);
 var tileName = "mayor";
 
