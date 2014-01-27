@@ -122,7 +122,7 @@ h1 {
 
 
 <script>
-var map = L.mapbox.map('map', 'fcc.map-kzt95hy6', {attributionControl: false})
+var map = L.mapbox.map('map', 'fcc.map-kzt95hy6', {attributionControl: false,maxZoom:8})
             .setView([40.58, -75.21], 6);
 var hash = L.hash(map);
 L.control.fullscreen().addTo(map);
