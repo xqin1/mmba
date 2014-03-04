@@ -21,10 +21,11 @@
 <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.1/leaflet.fullscreen.css' rel='stylesheet' />
  
 <style>
+body { font: 12px/18px 'Helvetica Neue',Arial,Helvetica,sans-serif; }
+
 h1 { 
-	font-family: Arial, Helvetica, sans-serif;
-    font-size: 32px;
-    margin: 0;
+	font-family: 'Helvetica Neue',Arial,Helvetica,sans-serif;
+    margin: 0 0 10px;
 }
 
 #map-titleBlock {
@@ -32,7 +33,7 @@ h1 {
     border: 1px solid #999;
     left: 10px;
     letter-spacing: 0;
-    padding: 5px 10px 8px;
+    padding: 10px 10px 8px;
     position: absolute;
     bottom: 53px;
     border-radius: 3px 3px 3px 3px;
@@ -42,8 +43,8 @@ h1 {
 
 #map-desc {
 	display: block;
-    font-size: 12px; 
-    font-weight: normal;     
+    font-weight: normal; 
+    line-height: normal;    
 }
 
 #map-ui {
@@ -116,7 +117,8 @@ h1 {
 </div>
  
 <div id="map-titleBlock">
-    <h1><span id="map-hd">Speed Test Participation</span> <span id="map-desc">This map depicts the number of mobile tests during November - December 2013. Each hexagon displayed represents the number of valid download tests on the mobile network, using 3G or 4G technology.</span></h1>
+    <h1><span id="map-hd">Speed Test Participation</span> </h1>
+    <span id="map-desc">This map depicts the number of mobile tests during November - December 2013. Each hexagon displayed represents the number of valid download tests on the mobile network, using 3G or 4G technology.</span>
 </div>
 
 
@@ -162,6 +164,10 @@ var ds_vz_TL = L.mapbox.tileLayer('fcc.y9nc23xr');
 var ds_vz_GL = L.mapbox.gridLayer('fcc.y9nc23xr');
 var ds_vz_GC = L.mapbox.gridControl(ds_vz_GL, {follow: true});
 
+var ds_mask_TL = L.mapbox.tileLayer('fcc.vl2chaor');
+var ds_mask_GL = L.mapbox.gridLayer('fcc.vl2chaor');
+var ds_mask_GC = L.mapbox.gridControl(ds_mask_GL, {follow: true});
+
 var mapHd = {
 	mayor: {
 		title: 'Speed Test Participation',
@@ -182,31 +188,28 @@ var mapHd = {
 	ds_vz: {
 		title: 'Verizon Download Speed',
 		description: 'These maps present the median download speed recorded in each hexagon for the network during Nov-December. Each hexagon displayed represents a minimum number of valid download tests on the mobile network, using 3G or 4G technology. Tests are both scheduled and manual, for the Lower 48 States.'	
-	}	
+	}
 }
 
 d3.selectAll(".sel").on("click", function(){
     if (d3.select(this).classed("active")){
         //do nothing
-    }else{
+    } else {
         d3.select('.map-legend').remove();
         d3.selectAll(".sel").attr("class","sel inactive");
         d3.select(this).attr("class","sel active");
          map.legendControl.removeLegend(eval(tileName+"_TL").getTileJSON().legend);
          tileName = d3.select(this).attr("id");
-
         activeLayerGroup.clearLayers();
-        activeLayerGroup.addLayer(eval(tileName+"_TL"));
+       
+		activeLayerGroup.addLayer(eval(tileName+"_TL"));
         activeLayerGroup.addLayer(eval(tileName+"_GL"));
         activeLayerGroup.addLayer(eval(tileName+"_GC"));
+		activeLayerGroup.addLayer(eval(ds_mask_TL));
         map.legendControl.addLegend(eval(tileName+"_TL").getTileJSON().legend);
 		
-		for (var key in mapHd) { 
-			if (key === this.id) { 
-				d3.select('#map-hd').text(mapHd[key].title);
-				d3.select('#map-desc').text(mapHd[key].description);		
-			}	
-		}
+		d3.select('#map-hd').text(mapHd[this.id].title);
+		d3.select('#map-desc').text(mapHd[this.id].description);		
     }
 });
  
