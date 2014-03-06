@@ -164,9 +164,9 @@ var ds_vz_TL = L.mapbox.tileLayer('fcc.y9nc23xr');
 var ds_vz_GL = L.mapbox.gridLayer('fcc.y9nc23xr');
 var ds_vz_GC = L.mapbox.gridControl(ds_vz_GL, {follow: true});
 
-var ds_mask_TL = L.mapbox.tileLayer('fcc.vl2chaor');
-var ds_mask_GL = L.mapbox.gridLayer('fcc.vl2chaor');
-var ds_mask_GC = L.mapbox.gridControl(ds_mask_GL, {follow: true});
+// var ds_mask_TL = L.mapbox.tileLayer('fcc.vl2chaor');
+// var ds_mask_GL = L.mapbox.gridLayer('fcc.vl2chaor');
+// var ds_mask_GC = L.mapbox.gridControl(ds_mask_GL, {follow: true});
 
 var mapHd = {
 	mayor: {
@@ -205,7 +205,7 @@ d3.selectAll(".sel").on("click", function(){
 		activeLayerGroup.addLayer(eval(tileName+"_TL"));
         activeLayerGroup.addLayer(eval(tileName+"_GL"));
         activeLayerGroup.addLayer(eval(tileName+"_GC"));
-		activeLayerGroup.addLayer(eval(ds_mask_TL));
+	//	activeLayerGroup.addLayer(eval(ds_mask_TL));
         map.legendControl.addLegend(eval(tileName+"_TL").getTileJSON().legend);
 		
 		d3.select('#map-hd').text(mapHd[this.id].title);
