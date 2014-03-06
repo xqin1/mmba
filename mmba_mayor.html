@@ -108,6 +108,7 @@ h1 {
     <div id='map-ui'>
         <ul>
             <li><a href='javascript:void(0)' id='mayor' class='sel active'>FCC Speed Test Participation</a></li>
+            <li><a href='javascript:void(0)' id='ds_all' class='sel inactive'>Combined Download Speed</a></li>
             <li><a href='javascript:void(0)' id='ds_att' class='sel inactive'>ATT - Download Speed</a></li>
             <li><a href='javascript:void(0)' id='ds_sprint' class='sel inactive'>Sprint - Download Speed</a></li>
             <li><a href='javascript:void(0)' id='ds_tmobile' class='sel inactive'>T-Mobile - Download Speed</a></li>
@@ -148,6 +149,10 @@ activeLayerGroup.addLayer(mayor_GC);
 activeLayerGroup.addTo(map,function(){console.log('done')});
 map.legendControl.addLegend(mayor_TL.getTileJSON().legend);
 
+var ds_all_TL = L.mapbox.tileLayer('fcc.lwok1emi');
+var ds_all_GL = L.mapbox.gridLayer('fcc.lwok1emi');
+var ds_all_GC = L.mapbox.gridControl(ds_all_GL, {follow: true});
+
 var ds_att_TL = L.mapbox.tileLayer('fcc.0novfgvi');
 var ds_att_GL = L.mapbox.gridLayer('fcc.0novfgvi');
 var ds_att_GC = L.mapbox.gridControl(ds_att_GL, {follow: true});
@@ -170,24 +175,28 @@ var ds_vz_GC = L.mapbox.gridControl(ds_vz_GL, {follow: true});
 
 var mapHd = {
 	mayor: {
-		title: 'Speed Test Participation',
-		description: 'This map depicts the number of mobile tests November 2013 through February 2014. Each hexagon displayed represents the number of valid download tests on ANY mobile network, using 3G or 4G technology. Tests are both scheduled and manual, and only for the Lower 48 States.'	
+		title: 'Crowdsource Participation',
+		description: 'This map presents the number of mobile tests November 2013 through February 2014. Each hexagon displayed represents the number of valid download tests on ANY mobile network, using 3G or 4G technology. Tests are both scheduled and manual, and only for the Lower 48 States.'	
+	},
+	ds_all: {
+		title: 'Combined Download Speed',
+		description: 'This map presents the median download speed recorded in each hexagon for all networks during November 2013 through February 2014. Each hexagon displayed represents a minimum number of valid download tests on the mobile network, using 3G or 4G technology. Tests are both scheduled and manual, for the Lower 48 States.'	
 	},
 	ds_att: {
 		title: 'AT&T Download Speed',
-		description: 'These maps present the median download speed recorded in each hexagon for the network during Nov-December. Each hexagon displayed represents a minimum number of valid download tests on the mobile network, using 3G or 4G technology. Tests are both scheduled and manual, for the Lower 48 States.'	
+		description: 'This map presents the median download speed recorded in each hexagon for the network during November 2013 through February 2014. Each hexagon displayed represents a minimum number of valid download tests on the mobile network, using 3G or 4G technology. Tests are both scheduled and manual, for the Lower 48 States.'	
 	},
 	ds_sprint: {
 		title: 'Sprint Download Speed',
-		description: 'These maps present the median download speed recorded in each hexagon for the network during Nov-December. Each hexagon displayed represents a minimum number of valid download tests on the mobile network, using 3G or 4G technology. Tests are both scheduled and manual, for the Lower 48 States.'	
+		description: 'This map presents the median download speed recorded in each hexagon for the network during November 2013 through February 2014. Each hexagon displayed represents a minimum number of valid download tests on the mobile network, using 3G or 4G technology. Tests are both scheduled and manual, for the Lower 48 States.'	
 	},
 	ds_tmobile: {
 		title: 'T-Mobile Download Speed',
-		description: 'These maps present the median download speed recorded in each hexagon for the network during Nov-December. Each hexagon displayed represents a minimum number of valid download tests on the mobile network, using 3G or 4G technology. Tests are both scheduled and manual, for the Lower 48 States.'	
+		description: 'This map presents the median download speed recorded in each hexagon for the network during November 2013 through February 2014. Each hexagon displayed represents a minimum number of valid download tests on the mobile network, using 3G or 4G technology. Tests are both scheduled and manual, for the Lower 48 States.'	
 	},
 	ds_vz: {
 		title: 'Verizon Download Speed',
-		description: 'These maps present the median download speed recorded in each hexagon for the network during Nov-December. Each hexagon displayed represents a minimum number of valid download tests on the mobile network, using 3G or 4G technology. Tests are both scheduled and manual, for the Lower 48 States.'	
+		description: 'This map presents the median download speed recorded in each hexagon for the network during November 2013 through February 2014. Each hexagon displayed represents a minimum number of valid download tests on the mobile network, using 3G or 4G technology. Tests are both scheduled and manual, for the Lower 48 States.'	
 	}
 }
 
